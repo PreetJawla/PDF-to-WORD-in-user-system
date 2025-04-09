@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF to Word Converter</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>PDF to Word Converter</h1>
+
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+      <input type="file" name="pdf_file" accept="application/pdf" required />
+      <button type="submit">Convert to Word</button>
+    </form>
+
+    <p id="status" class="status hidden"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('upload-form');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      status.classList.remove('hidden');
+      status.textContent = "Converting... please wait.";
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/convert', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = "converted.docx";
+          link.click();
+
+          status.textContent = "Conversion successful! File downloaded.";
+        } else {
+          status.textContent = "Something went wrong. Please try again.";
+        }
+      } catch (error) {
+        console.error(error);
+        status.textContent = "Error during conversion.";
+      }
+    });
+  </script>
+</body>
+</html>
