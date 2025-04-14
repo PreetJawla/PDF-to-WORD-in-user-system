@@ -139,7 +139,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 **Preet Jawla**  
-Email: [your.email@example.com](mailto:your.email@example.com)
+Email: [preetjawla7@gmail.com](mailto:preetjawla7@gmail.com)
 
 ---
 
